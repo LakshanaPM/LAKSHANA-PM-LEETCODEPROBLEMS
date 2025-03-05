@@ -1,0 +1,36 @@
+int heightChecker(int* heights, int heightsSize) {
+    int max=heights[0],min=heights[0];
+    for(int i=1;i<heightsSize;i++){
+        if(heights[i]>max){
+            max=heights[i];
+        }
+        else if(heights[i]<min){
+            min=heights[i];
+        }
+    }
+    int range=max-min+1;
+    int* count=(int*)malloc(range*sizeof(int));
+    for(int i=0;i<range;i++){
+        count[i]=0;
+    }
+    for(int i=0;i<heightsSize;i++){
+        ++count[heights[i]-min];
+    }
+    for(int i=1;i<range;i++){
+        count[i]+=count[i-1];
+    }
+    int* b=(int*)malloc(heightsSize*sizeof(int));
+    for(int i=heightsSize-1;i>=0;i--){
+        b[--count[heights[i]-min]]=heights[i];
+    }
+    int change=0;
+    for(int i=0;i<heightsSize;i++){
+        if(heights[i]!=b[i]){
+            change++;
+        }
+    }
+    free(count);
+    free(b);
+    free(heights);
+    return change;
+}
