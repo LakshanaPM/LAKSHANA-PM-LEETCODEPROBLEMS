@@ -1,0 +1,31 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* sortArrayByParityII(int* nums, int numsSize, int* returnSize) {
+    int* even=(int*)malloc((numsSize/2)*sizeof(int));
+    int* odd=(int*)malloc((numsSize/2)*sizeof(int));
+    int j=0,k=0;
+    for(int i=0;i<numsSize;i++){
+        if(nums[i]%2==0){
+           even[j++]=nums[i];
+        }
+        else if(nums[i]%2!=0){
+           odd[k++]=nums[i];
+        }
+    }
+    int* b=(int*)malloc(numsSize*sizeof(int));
+    j=0,k=0;
+    for(int i=0;i<numsSize;i++){
+        if(i%2==0){
+            b[i]=even[j++];
+        }
+        else{
+            b[i]=odd[k++];
+        }
+    }
+    *returnSize=numsSize;
+    free(even);
+    free(odd);
+    free(nums);
+    return b;
+}
